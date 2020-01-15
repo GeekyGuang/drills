@@ -1,9 +1,12 @@
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+
 var drawFlag = false
 var lastPosition ={}
 lastPosition.x2 = 0;
 lastPosition.y2 = 0;
 
-document.onmousedown = function(a) {
+canvas.onmousedown = function(a) {
   drawFlag = true
   var x = a.clientX;
   var y = a.clientY;
@@ -14,7 +17,7 @@ document.onmousedown = function(a) {
   lastPosition.y2 = y;
 }
 
-document.onmousemove = function(a) {
+canvas.onmousemove = function(a) {
   var x = a.clientX;
   var y = a.clientY;
   if (drawFlag){
@@ -25,24 +28,18 @@ document.onmousemove = function(a) {
   }
 }
 
-document.onmouseup = function(a) {
+canvas.onmouseup = function(a) {
   drawFlag = false
 }
 
 
 function drawCircle(x,y,r) {
-  var canvas = document.getElementById('canvas');
-  var context = canvas.getContext('2d');
-  
   context.beginPath();
   context.arc(x,y,r,0,Math.PI*2,true);
   context.fill();
 }
 
-function drawLine(x1,y1,x2,y2){
-  var canvas = document.getElementById('canvas');
-  var context = canvas.getContext('2d');
-  
+function drawLine(x1,y1,x2,y2){ 
   context.beginPath();
   context.moveTo(x1,y1);
   context.lineTo(x2,y2);
