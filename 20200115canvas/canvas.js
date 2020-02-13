@@ -1,4 +1,8 @@
 var canvas = document.getElementById('canvas');
+getSize()  //获取窗口宽高
+window.onresize = function() {
+  getSize()
+}
 var context = canvas.getContext('2d');
 
 var drawFlag = false
@@ -45,4 +49,13 @@ function drawLine(x1,y1,x2,y2){
   context.lineTo(x2,y2);
   context.lineWidth = 2;
   context.stroke();
+}
+
+// 获取窗口宽高
+function getSize(){
+  var pageWidth = document.documentElement.clientWidth;
+  var pageHeight = document.documentElement.clientHeight;
+
+  canvas.width = pageWidth
+  canvas.height = pageHeight
 }
