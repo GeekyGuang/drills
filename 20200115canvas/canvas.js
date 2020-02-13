@@ -1,4 +1,5 @@
 var canvas = document.getElementById('canvas');
+
 getSize()  //获取窗口宽高
 window.onresize = function() {
   getSize()
@@ -11,24 +12,30 @@ lastPosition.x2 = 0;
 lastPosition.y2 = 0;
 
 canvas.onmousedown = function(a) {
-  drawFlag = true
+  console.log(eraserEnable)
   var x = a.clientX;
   var y = a.clientY;
-  if (drawFlag){
-      drawCircle(x,y,1)
+  drawFlag = true
+  if(eraserEnable){
+    context.clearRect(x-5,y-5,10,10);
+  }else{
+    lastPosition.x2 = x;
+    lastPosition.y2 = y;
   }
-  lastPosition.x2 = x;
-  lastPosition.y2 = y;
 }
 
 canvas.onmousemove = function(a) {
   var x = a.clientX;
   var y = a.clientY;
-  if (drawFlag){
-      drawCircle(x,y,1);
+
+  if (!drawFlag){return}
+
+  if(eraserEnable){
+    context.clearRect(x-5,y-5,10,10)
+  }else{
       drawLine(x,y,lastPosition.x2,lastPosition.y2);
-  lastPosition.x2 = x;
-  lastPosition.y2 = y;
+      lastPosition.x2 = x;
+      lastPosition.y2 = y;
   }
 }
 
@@ -36,6 +43,12 @@ canvas.onmouseup = function(a) {
   drawFlag = false
 }
 
+
+var eraserEnable = false;
+eraser.onclick = function(){
+  eraserEnable = true;
+  console.log(eraserEnable)
+}
 
 function drawCircle(x,y,r) {
   context.beginPath();
