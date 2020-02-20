@@ -22,37 +22,75 @@ function listenToMouse(){
   var lastPosition ={}
   lastPosition.x2 = 0;
   lastPosition.y2 = 0;
-  
-  canvas.onmousedown = function(a) {
-  console.log(eraserEnable)
-  var x = a.clientX;
-  var y = a.clientY;
-  drawFlag = true
-  if(eraserEnable){
-    context.clearRect(x-5,y-5,10,10);
-    }else{
-      lastPosition.x2 = x;
-      lastPosition.y2 = y;
+  if (document.body.ontouchstart !== undefined){
+    canvas.ontouchstart = function(a){
+      console.log('开始摸我了')
+      console.log(eraserEnable)
+      var x = a.touches[0].clientX;
+      var y = a.touches[0].clientY;
+      drawFlag = true
+      if(eraserEnable){
+        context.clearRect(x-5,y-5,10,10);
+        }else{
+          lastPosition.x2 = x;
+          lastPosition.y2 = y;
+        }
     }
-  }
 
- canvas.onmousemove = function(a) {
-  var x = a.clientX;
-  var y = a.clientY;
-
-  if (!drawFlag){return}
-
-  if(eraserEnable){
-    context.clearRect(x-5,y-5,10,10)
-    }else{
-      drawLine(x,y,lastPosition.x2,lastPosition.y2);
-      lastPosition.x2 = x;
-      lastPosition.y2 = y;
+    canvas.ontouchmove = function(a){
+      console.log('啊，雅蠛蝶')
+      var x = a.touches[0].clientX;
+      var y = a.touches[0].clientY;
+    
+      if (!drawFlag){return}
+    
+      if(eraserEnable){
+        context.clearRect(x-5,y-5,10,10)
+        }else{
+          drawLine(x,y,lastPosition.x2,lastPosition.y2);
+          lastPosition.x2 = x;
+          lastPosition.y2 = y;
+        }
     }
-  }
 
-  canvas.onmouseup = function(a) {
-    drawFlag = false
+    canvas.ontouchend = function(){
+      console.log('不要停')
+      drawFlag = false
+    }
+
+  }else{
+    canvas.onmousedown = function(a) {
+      console.log(eraserEnable)
+      var x = a.clientX;
+      var y = a.clientY;
+      drawFlag = true
+      if(eraserEnable){
+        context.clearRect(x-5,y-5,10,10);
+        }else{
+          lastPosition.x2 = x;
+          lastPosition.y2 = y;
+        }
+      }
+    
+     canvas.onmousemove = function(a) {
+      var x = a.clientX;
+      var y = a.clientY;
+    
+      if (!drawFlag){return}
+    
+      if(eraserEnable){
+        context.clearRect(x-5,y-5,10,10)
+        }else{
+          drawLine(x,y,lastPosition.x2,lastPosition.y2);
+          lastPosition.x2 = x;
+          lastPosition.y2 = y;
+        }
+      }
+    
+      canvas.onmouseup = function(a) {
+        drawFlag = false
+      }
+      
   }
   
 }
